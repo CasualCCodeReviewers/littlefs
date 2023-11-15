@@ -4234,18 +4234,21 @@ cleanup:
     return err;
 }
 
-static int lfs_deinit(lfs_t *lfs) {
+static int lfs_deinit(lfs_t *lfs __attribute__((nonnull)) ) {
     // free allocated memory
     if (!lfs->cfg->read_buffer) {
         lfs_free(lfs->rcache.buffer);
+        lfs->rcache.buffer = NULL;
     }
 
     if (!lfs->cfg->prog_buffer) {
         lfs_free(lfs->pcache.buffer);
+        lfs->pcache.buffer = NULL;
     }
 
     if (!lfs->cfg->lookahead_buffer) {
         lfs_free(lfs->free.buffer);
+        lfs->free.buffer = NULL;
     }
 
     return 0;
